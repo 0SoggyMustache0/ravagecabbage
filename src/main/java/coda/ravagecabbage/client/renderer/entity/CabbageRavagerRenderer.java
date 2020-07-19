@@ -2,22 +2,22 @@ package coda.ravagecabbage.client.renderer.entity;
 
 import coda.ravagecabbage.client.renderer.entity.model.CabbageRavagerModel;
 import coda.ravagecabbage.entity.CabbageRavagerEntity;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.util.Identifier;
 
-@OnlyIn(Dist.CLIENT)
-public class CabbageRavagerRenderer extends MobRenderer<CabbageRavagerEntity, CabbageRavagerModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/illager/ravager.png");
+@Environment(EnvType.CLIENT)
+public class CabbageRavagerRenderer extends MobEntityRenderer<CabbageRavagerEntity, CabbageRavagerModel> {
+    private static final Identifier TEXTURE = new Identifier("textures/entity/illager/ravager.png");
 
-    public CabbageRavagerRenderer(EntityRendererManager renderManagerIn) {
+    public CabbageRavagerRenderer(EntityRenderDispatcher renderManagerIn) {
         super(renderManagerIn, new CabbageRavagerModel(), 1.1F);
     }
 
     @Override
-    public ResourceLocation getEntityTexture(CabbageRavagerEntity entity) {
+    public Identifier getTexture(CabbageRavagerEntity entity) {
         return TEXTURE;
     }
 }

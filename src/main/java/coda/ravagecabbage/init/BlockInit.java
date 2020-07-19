@@ -1,34 +1,29 @@
 package coda.ravagecabbage.init;
 
 import coda.ravagecabbage.RavageCabbage;
-import coda.ravagecabbage.RavageCabbage.RCItemGroup;
 import coda.ravagecabbage.block.CabbageCrop;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraft.sound.BlockSoundGroup;
 
-@Mod.EventBusSubscriber(modid = RavageCabbage.MOD_ID, bus = Bus.MOD)
+import java.util.HashMap;
+import java.util.Map;
+
 public class BlockInit {
-	
-	public static final Block CABBAGE_CROP = new CabbageCrop(Block.Properties.from(Blocks.POTATOES)).setRegistryName("cabbage_crop");
-	public static final Block CABBAGE_CRATE = new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD)).setRegistryName("cabbage_crate");
 
-	@SubscribeEvent
-	public static void registerItems(final RegistryEvent.Register<Block> event) {
-		event.getRegistry().register(CABBAGE_CROP);
-		event.getRegistry().register(CABBAGE_CRATE);
-	}
-	
-	@SubscribeEvent
-	public static void registerBlockItems(final RegistryEvent.Register<Item> event) {
-		event.getRegistry().register(new BlockItem(CABBAGE_CRATE, new Item.Properties().group(RCItemGroup.INSTANCE)).setRegistryName("cabbage_crate"));
+	public static final Map<String, Block> BLOCKS = new HashMap<>();
+
+	public static final Block CABBAGE_CROP = register("cabbage_crop", new CabbageCrop(FabricBlockSettings.copyOf(Blocks.POTATOES)));
+	public static final Block CABBAGE_CRATE = register("cabbage_crate", new Block(FabricBlockSettings.of(Material.WOOD).hardness(2.5F).resistance(2.5F).sounds(BlockSoundGroup.WOOD)));
+
+	public static Block register(String name, Block block){
+		BLOCKS.put(name, block);
+		ItemInit.ITEMS.put(name, new BlockItem(block, new Item.Settings().group(RavageCabbage.GROUP)));
+		return block;
 	}
 	
 }
